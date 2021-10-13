@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<!--
+  WARNING! Make sure that you match all Quasar related
+  tags to the same version! (Below it's "@2.1.2")
+-->
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.1.2/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<!-- example of injection point where you write your app template -->
+<div id="q-app">
+    <q-layout view="hHh Lpr lff">
+        <q-header elevated>
+            <q-toolbar>
+                <q-btn flat @click="drawer = !drawer" round dense icon="menu" ></q-btn>
+                <q-toolbar-title>Contoh</q-toolbar-title>
+            </q-toolbar>
+        </q-header>
+
+        <q-page-container>
+            <q-page padding>
+                <q-table
+                        dense
+                        flat
+                        bordered
+                        separator="cell"
+                        :rows="rowsData"
+                        :columns="columns"
+                        title="Edit Table"
+                        :rows-per-page-options="[10]"
+                        row-key="name"
+                >
+                    <template v-slot:body="props">
+                        <q-tr :props="props">
+                            <q-td key="calories" :props="props" class="text-negative">
+                                {{ props.row.calories }}
+                                <q-popup-edit v-model.number="props.row.calories" buttons v-slot="scope">
+                                    <q-input type="number" v-model.number="scope.value" dense autofocus @keyup.enter="scope.set" />
+                                </q-popup-edit>
+                            </q-td>
+                            <q-td key="fat" :props="props">
+                                {{ props.row.calories * 30 }}
+                                <q-popup-edit disabled v-model="props.row.fat" auto-save v-slot="scope">
+                                    <div class="text-italic text-primary q-mb-xs">
+                                        My Custom Title
+                                    </div>
+                                    <q-input v-model="scope.value" dense autofocus @keyup.enter="scope.set" />
+                                </q-popup-edit>
+                            </q-td>
+                            <q-td key="carbs" :props="props">
+                                {{ props.row.carbs }}
+                            </q-td>
+                            <q-td key="protein" :props="props">
+                                {{ props.row.protein }}
+                            </q-td>
+                            <q-td key="sodium" :props="props">
+                                {{ props.row.sodium }}
+                            </q-td>
+                            <q-td key="calcium" :props="props">
+                                {{ props.row.calcium }}
+                            </q-td>
+                            <q-td key="iron" :props="props">
+                                {{ props.row.iron }}
+                            </q-td>
+                        </q-tr>
+                    </template>
+                </q-table>
+            </q-page>
+        </q-page-container>
+    </q-layout>
+</div>
+
+<!-- Add the following at the end of your body tag -->
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quasar@2.1.2/dist/quasar.umd.prod.js"></script>
+
+<script>
+    const columns = [
+        { name: 'calories', align: 'center', label: 'Calories', field: 'calories', isDisableEdit: true },
+        { name: 'fat', label: 'Fat (g) calories x 30', field: 'fat', isDisableEdit: false  },
+        { name: 'carbs', label: 'Carbs (g)', field: 'carbs', isDisableEdit: true  },
+        { name: 'protein', label: 'Protein (g)', field: 'protein', isDisableEdit: true  },
+        { name: 'sodium', label: 'Sodium (mg)', field: 'sodium', isDisableEdit: true  },
+        { name: 'calcium', label: 'Calcium (%)', field: 'calcium', isDisableEdit: true  },
+        { name: 'iron', label: 'Iron (%)', field: 'iron' }
+    ]
+
+    const rows = [
+        {
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            sodium: 87,
+            calcium: '14%',
+            iron: '1%'
+        },
+        {
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            sodium: 129,
+            calcium: '8%',
+            iron: '1%'
+        },
+        {
+            name: 'Eclair',
+            calories: 262,
+            fat: 16.0,
+            carbs: 23,
+            protein: 6.0,
+            sodium: 337,
+            calcium: '6%',
+            iron: '7%'
+        },
+        {
+            name: 'Cupcake',
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            sodium: 413,
+            calcium: '3%',
+            iron: '8%'
+        },
+        {
+            name: 'Gingerbread',
+            calories: 356,
+            fat: 16.0,
+            carbs: 49,
+            protein: 3.9,
+            sodium: 327,
+            calcium: '7%',
+            iron: '16%'
+        },
+        {
+            name: 'Jelly bean',
+            calories: 375,
+            fat: 0.0,
+            carbs: 94,
+            protein: 0.0,
+            sodium: 50,
+            calcium: '0%',
+            iron: '0%'
+        },
+        {
+            name: 'Lollipop',
+            calories: 392,
+            fat: 0.2,
+            carbs: 98,
+            protein: 0,
+            sodium: 38,
+            calcium: '0%',
+            iron: '2%'
+        },
+        {
+            name: 'Honeycomb',
+            calories: 408,
+            fat: 3.2,
+            carbs: 87,
+            protein: 6.5,
+            sodium: 562,
+            calcium: '0%',
+            iron: '45%'
+        },
+        {
+            name: 'Donut',
+            calories: 452,
+            fat: 25.0,
+            carbs: 51,
+            protein: 4.9,
+            sodium: 326,
+            calcium: '2%',
+            iron: '22%'
+        },
+        {
+            name: 'KitKat',
+            calories: 518,
+            fat: 26.0,
+            carbs: 65,
+            protein: 7,
+            sodium: 54,
+            calcium: '12%',
+            iron: '6%'
+        }
+    ]
+
+    /*
+      Example kicking off the UI. Obviously, adapt this to your specific needs.
+      Assumes you have a <div id="q-app"></div> in your <body> above
+     */
+    const app = Vue.createApp({
+        data() {
+            return {
+                rowsData: rows
+            }
+        },
+        setup () {
+            return {
+                columns
+            }
+        }
+    })
+
+    app.use(Quasar, {
+        config: {
+            /*
+            brand: {
+              // primary: '#e46262',
+              // ... or all other brand colors
+            },
+            notify: {...}, // default set of options for Notify Quasar plugin
+            loading: {...}, // default set of options for Loading Quasar plugin
+            loadingBar: { ... }, // settings for LoadingBar Quasar plugin
+            // ..and many more (check Installation card on each Quasar component/directive/plugin)
+            */
+        }
+    })
+    app.mount('#q-app')
+</script>
+</body>
+</html>
